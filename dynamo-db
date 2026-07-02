@@ -1,0 +1,7 @@
+We need a place to store the scans permanently. For IoT, DynamoDB is perfect because it's fast and scales automatically.
+Go to the DynamoDB Console > Tables > Create table.
+Table name: StudentAttendance.
+Partition key: student_id (String).
+Sort key: timestamp (Number).
+Why a Sort Key? This allows one student to have multiple entries (one for every day they scan).
+Keep everything else as Default and click Create table.

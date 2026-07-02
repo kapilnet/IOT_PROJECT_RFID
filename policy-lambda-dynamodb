@@ -1,0 +1,39 @@
+assume role policy 
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ReadAttendanceData",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:Query",
+                "dynamodb:GetItem"
+            ],
+            "Resource": "arn:aws:dynamodb:your-region:your-account-id:table/StudentAttendance"
+        },
+        {
+            "Sid": "WriteLogs",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        }
+    ]
+}

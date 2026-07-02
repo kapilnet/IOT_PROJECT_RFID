@@ -1,0 +1,53 @@
+Step 1: Create the Lambda Function
+Go to the AWS Lambda Console.
+
+Click Create function.
+
+Choose Author from scratch.
+
+Function name: AttendanceCalculator.
+
+Runtime: Select Python 3.12 (or the latest 3.x).
+
+Permissions: Click "Change default execution role" and select Use an existing role. Pick the role you just added the policy to.
+
+Click Create function.
+
+
+
+
+
+
+1. The "Local" Way (For Testing Only)
+You can keep the index.html file right on your laptop's desktop.
+
+How it works: You just double-click the file, and it opens in Chrome.
+
+The Catch: Only you can see it. If you send the link C:/Users/Saksham/index.html to a friend at GGSIPU, it won't work for them because that file is only on your hard drive.
+
+2. The "Cloud" Way (AWS Amplify - Recommended)
+This is the professional way to do it. You "host" the file on AWS so it gets a public URL like https://main.d12345.amplifyapp.com.
+
+Why use AWS Amplify?
+
+Global Access: Your classmates can check their 70% attendance from their own phones while sitting in the canteen.
+
+SSL Security: It automatically gives you https://, which makes the site look official.
+
+
+How to put your file on AWS Amplify:
+Prepare your file: Make sure your index.html has the CSS inside the <style> tags (like the code I gave you earlier) and that you have pasted your API Gateway URL into the JavaScript section.
+
+Go to AWS Console: Search for AWS Amplify.
+
+Deploy without Git:
+
+Click "Create new app".
+
+Select "Deploy without Git provider".
+
+Give it a name: GGSIPU-Attendance-Portal.
+
+Drag and Drop: Simply drag your index.html file into the box.
+
+Save and Deploy: Within 30 seconds, AWS will give you a "Domain" link. Click it, and your dashboard is live!

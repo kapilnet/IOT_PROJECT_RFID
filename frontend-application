@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGSIPU | Attendance Portal</title>
+    <style>
+        /* 1. The Background & Core Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* 2. Glassmorphism Card Effect */
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 { color: #4b6cb7; margin-bottom: 25px; font-weight: 700; }
+
+        /* 3. Input and Button Styling */
+        .input-group { margin-bottom: 20px; }
+        
+        input {
+            width: 80%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus { outline: none; border-color: #667eea; }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover { background: #764ba2; transform: translateY(-2px); }
+
+        /* 4. Results & Progress Bar */
+        #result { margin-top: 30px; display: none; }
+
+        .progress-container {
+            background-color: #eee;
+            border-radius: 20px;
+            margin: 20px 0;
+            height: 25px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Logic-based colors */
+        .bg-safe { background: linear-gradient(90deg, #2ecc71, #27ae60); }
+        .bg-shortage { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+
+        .info-text { font-size: 14px; color: #666; margin: 5px 0; }
+        .status-label { font-size: 18px; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-card">
+        <h2>Student Portal</h2>
+        <div class="input-group">
+            <input type="text" id="uidInput" placeholder="Enter RFID UID">
+        </div>
+        <button onclick="checkAttendance()">Check Attendance</button>
+        
+        <div id="result">
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar">0%</div>
+            </div>
+            <p class="info-text">Attendance Score: <span id="percentText">0</span>%</p>
+            <div id="statusLabel" class="status-label"></div>
+            <p id="warningText" class="info-text"></p>
+        </div>
+    </div>
+
+    <script>
+        async function checkAttendance() {
+            const uid = document.getElementById('uidInput').value;
+            // REPLACE THIS with your actual API Gateway URL
+            const apiURL = "YOUR_API_GATEWAY_URL/check?uid=" + uid;
+            
+            try {
+                const response = await fetch(apiURL);
+                const data = await response.json();
+                
+                const resultDiv = document.getElementById('result');
+                const pBar = document.getElementById('progressBar');
+                const statusLabel = document.getElementById('statusLabel');
+                
+                resultDiv.style.display = "block";
+                
+                // Update Progress Bar
+                pBar.style.width = data.percentage + "%";
+                pBar.innerText = data.percentage + "%";
+                document.getElementById('percentText').innerText = data.percentage;
+                
+                // Style based on 70% threshold
+                if(data.percentage >= 70) {
+                    pBar.className = "progress-bar bg-safe";
+                    statusLabel.innerText = "Status: SAFE";
+                    statusLabel.style.color = "#27ae60";
+                    document.getElementById('warningText').innerText = "Keep it up!";
+                } else {
+                    pBar.className = "progress-bar bg-shortage";
+                    statusLabel.innerText = "Status: SHORTAGE";
+                    statusLabel.style.color = "#c0392b";
+                    document.getElementById('warningText').innerText = "Warning: You need " + data.classes_needed + " more classes.";
+                }
+            } catch (err) {
+                alert("Could not fetch data. Check your API URL.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+To get these keys, you must register your ESP32 as a "Thing" inside the AWS Console. AWS will then generate unique cryptographic keys specifically for this device.
+
+Here is the step-by-step process:
+
+Log into AWS: Go to the AWS Management Console and search for IoT Core.
+
+Create a Thing: * On the left sidebar, go to Manage > All devices > Things.
+
+Click Create things, select Create single thing, and name it ESP32_Scanner_01. Click Next.
+
+Generate Certificates:
+
+Choose Auto-generate a new certificate and click Next.
+
+(You can skip attaching a policy for just a moment and click Create thing).
+
+Download the Keys (CRITICAL STEP): A pop-up will appear with several download links. You must download them now, as AWS will never show you the Private Key again.
+
+Device Certificate (Ends in -certificate.pem.crt): Open this file in Notepad, copy everything, and paste it into your deviceCert variable.
+
+Private Key (Ends in -private.pem.key): Open this in Notepad, copy everything, and paste it into your deviceKey variable.
+
+Amazon Root CA 1: Click the download link for this, which opens a new page. Copy the text for Root CA 1 and paste it into your amazonRootCA variable.

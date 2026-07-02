@@ -1,0 +1,36 @@
+[ hardware/ ]
+      |
+      |-- SmartScanner.ino (Logic)  ------> [ Physical RFID Card ]
+      |-- aws_network.h    (WiFi)           (Student Taps Card)
+      |-- secrets.h        (Certs)
+      |
+      v
+[ AWS IoT Core ] <------------------------- (Secure MQTT Publish)
+      |
+      v
+[ DynamoDB Table ] <----------------------- (IoT Rule saves scan)
+
+----------------------------------------------------------------------------------------------------------------------------
+[ backend/ ]
+      |
+      |-- calculator_lambda.py
+      |
+      v
+[ AWS Lambda ] <--------------------------- (Triggered by API)
+      |
+      |-----> [ Queries DynamoDB ]
+      |             |
+      |<------------| (Returns Count of Scans)
+      |
+      v
+[ Math: (Scans / Total) * 100 ] ----------> (Returns JSON Result)
+------------------------------------------------------------------------------------------------------------------------------
+[ frontend/ ]
+      |
+      |-- index.html (HTML + CSS + JS)
+      |
+      v
+[ AWS Amplify ] <-------------------------- (Hosts your website URL)
+      ^
+      |
+[ Student Browser ] <--- (User enters UID) ---> [ Amazon API Gateway ]

@@ -1,0 +1,30 @@
+assume role iot 
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "iot.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
+policy attachment to the dynamodb --- this policy will allow iot to put object to the dynamodb 
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:your-region:your-account-id:table/StudentAttendance"
+            ]
+        }
+    ]
+}

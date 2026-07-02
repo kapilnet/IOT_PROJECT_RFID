@@ -1,0 +1,20 @@
+
+
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "iot:Connect",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": "arn:aws:iot:your-region:your-account-id:topic/attendance/scan"
+    }
+  ]
+}
+AWS IoT Core Console > Security > Policies.
+Go back to your Certificate (under Security > Certificates), click Actions > Attach Policy, and select the one you just created.

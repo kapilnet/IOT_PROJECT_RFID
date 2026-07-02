@@ -1,0 +1,22 @@
+Create the IoT Rule (The Bridge)
+This is the "Logic" that connects your ESP32 to your Database.
+
+Go to AWS IoT Core > Message Routing > Rules.
+
+Click Create Rule.
+
+Rule name: RouteToDynamoDB.
+
+SQL Statement:
+
+SQL
+SELECT * FROM 'attendance/scan'
+Attach an Action:
+
+Choose DynamoDBv2 (Put a message into a DynamoDB table).
+
+Select your table: StudentAttendance.
+
+IAM Role: Click "Create new role," name it IoTToDynamoRole. This gives AWS IoT permission to write into your database.
+
+Click Create.
